@@ -15,7 +15,7 @@ fn main() {
         { // Part 1
             let mut prev: i32 = 10000000;
             let mut count: i32 = 0;
-            for &num in vals.iter() {
+            for &num in &vals {
                 if num > prev {
                     count+= 1;
                 }
