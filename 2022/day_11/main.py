@@ -1,6 +1,7 @@
 from copy import deepcopy
 import numpy as np
 from pathlib import Path
+import re
 
 PATH = Path(__file__).parent
 INPUT_PATH = PATH / "input.txt"
@@ -20,6 +21,8 @@ def parse_input(path: Path) -> list:
                         items = [int(i) for i in line.split(": ")[1].split(", ")]
                     case 2:
                         op = line.split(" = ")[1]
+                        # verify before eval
+                        assert re.match(r"^(old|\d+) (\*|\+) (old|\d+)$", op)
                     case 3:
                         test = int(line.split("by ")[1])
                     case 4:

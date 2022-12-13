@@ -1,6 +1,7 @@
 from copy import deepcopy
+import json
 import numpy as np
-import functools
+from functools import cmp_to_key
 from pathlib import Path
 
 PATH = Path(__file__).parent
@@ -41,9 +42,8 @@ def part_1(data: list):
 
     correct = []
     for idx, pair in enumerate(data, 1):
-        l1, l2 = [eval(x) for x in pair.splitlines()]
-        out = compare(l1, l2)
-        if out is True:
+        l1, l2 = [json.loads(x) for x in pair.splitlines()]
+        if compare(l1, l2) is True:
             correct.append(idx)
     return sum(correct)
 
@@ -52,11 +52,9 @@ def part_2(data: list):
     dividers = [[[2]], [[6]]]
     packets = [*dividers]
     for idx, pair in enumerate(data, 1):
-        packets.extend([eval(x) for x in pair.splitlines()])
+        packets.extend([json.loads(x) for x in pair.splitlines()])
 
-    ordered = sorted(
-        packets, key=functools.cmp_to_key(lambda x, y: -1 if compare(x, y) else 1)
-    )
+    ordered = sorted(packets, key=cmp_to_key(lambda x, y: -1 if compare(x, y) else 1))
     return np.prod([ordered.index(x) + 1 for x in dividers])
 
 
