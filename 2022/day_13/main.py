@@ -17,24 +17,23 @@ def parse_input(path: Path) -> list:
 
 def compare(l1, l2):
     for l, r in zip(l1, l2):
-        if type(l) == type(r) == int:
-            if l == r:
+        match (l, r):
+            case (int(), int()) if l == r:
                 continue
-            else:
+            case (int(), int()):
                 return l < r
-        elif type(l) == type(r) == list:
-            out = compare(l, r)
-        elif type(l) == list:
-            out = compare(l, [r])
-        elif type(r) == list:
-            out = compare([l], r)
-        else:
-            assert False
+            case (list(), list()):
+                out = compare(l, r)
+            case (list(), int()):
+                out = compare(l, [r])
+            case (int(), list()):
+                out = compare([l], r)
+            case _:
+                assert False
 
-        if out is True:
-            return True
-        elif out is False:
-            return False
+        if out is not None:
+            return out
+
     return None if len(l1) == len(l2) else len(l1) < len(l2)
 
 
