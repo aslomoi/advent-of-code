@@ -19,10 +19,8 @@ def compare(l1, l2):
         if type(l) == type(r) == int:
             if l == r:
                 continue
-            elif l < r:
-                return True
             else:
-                return False
+                return l < r
         elif type(l) == type(r) == list:
             out = compare(l, r)
         elif type(l) == list:
@@ -70,10 +68,9 @@ def run():
     print(f"sample: {part_1(deepcopy(sample))}")
     print(f"data: {part_1(deepcopy(data))}")
 
-    # print("\n** Part 2 **")
+    print("\n** Part 2 **")
     print(f"sample: {part_2(sample)}")
     print(f"data: {part_2(data)}")
-    # not 6402373705728000
 
 
 if __name__ == "__main__":
