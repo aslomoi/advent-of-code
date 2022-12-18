@@ -155,9 +155,7 @@ def part_2(data):
                 continue
 
             mid = min(len(options), LOOKAHEAD) // 2
-            for i, perm in enumerate(
-                it.permutations(options, min(len(options), LOOKAHEAD))
-            ):
+            for perm in it.permutations(options, min(len(options), LOOKAHEAD)):
                 trials = [(perm[mid:], perm[:mid]), (perm[mid + 1 :], perm[: mid + 1])]
 
                 for trial in trials:
