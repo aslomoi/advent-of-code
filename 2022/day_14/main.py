@@ -67,7 +67,7 @@ def part_1(grid):
         else:
             grid[(x, y)] = "o"
             falling.pop()
-            count +=1
+            count += 1
 
 
 def part_2(grid):
