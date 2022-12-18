@@ -1,13 +1,10 @@
-from collections import defaultdict, Counter, deque
+from collections import defaultdict
 from copy import deepcopy
 import numpy as np
-import re
 import heapq
 from pathlib import Path
-import sys
 import itertools as it
 
-sys.setrecursionlimit(5000)
 PATH = Path(__file__).parent
 INPUT_PATH = PATH / "input.txt"
 SAMPLE_PATH = PATH / "sample.txt"
@@ -17,38 +14,6 @@ def parse_input(path):
     with open(path, "r") as f:
         lines = [l.strip() for l in f.read().split("\n")]
         return lines
-
-
-# def best(cur, open_, vs):
-#     new_open = [*open_, cur]
-#     goto = (new_open,0)
-#     for nxt in vs[cur]['to']:
-#         if nxt in new_open:
-#             continue
-#         amt = best(nxt, new_open, vs)
-#         if not goto[0] or amt[1] > goto[1]:
-#             goto = amt
-#     return (goto[0], vs[cur]['r'] + goto[1] + 1)
-
-# def best(paths, remaining, vs):
-#     for path in paths:
-#         amt = 0
-#         for t,v in enumerate(path[1:],1):
-#             amt += vs[v]['r'] * (remaining-t)
-#         print(path, amt)
-
-
-# def all_paths(cur, path, open_, vs):
-#     path = [*path, cur]
-#     paths = []
-#     found = None
-#     for nxt in vs[cur]['to']:
-#         if nxt not in open_:
-#             found = True
-#             paths.extend(all_paths(nxt, path, vs))
-#     if not found:
-#         paths = [path]
-#     return paths
 
 
 def time_to(vs):
