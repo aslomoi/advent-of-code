@@ -14,16 +14,17 @@ def parse_input(path: Path) -> list:
 
 def part_1(data: list):
     L = len(data)
+    zero_find_by = data.index(0)
     moves = data.copy()
-    data = [(x, False) for x in data]
+    data = [(x, i) for i, x in enumerate(data)]
 
-    for move in moves:
-        idx = data.index((move, False))
+    for i, move in enumerate(moves):
+        idx = data.index((move, i))
         data = data[idx + 1:] + data[:idx]
         idx2 = move % (L - 1)
-        data.insert(idx2, (move, True))
+        data.insert(idx2, (move, i))
 
-    zero = data.index((0, True))
+    zero = data.index((0, zero_find_by))
     return (
         data[(zero + 1000) % L][0]
         + data[(zero + 2000) % L][0]
@@ -34,20 +35,15 @@ def part_1(data: list):
 def part_2(data: list):
     L = len(data)
     zero_find_by = data.index(0)
-    data = [(x * 811589153, -1) for x in data]
+    data = [(x * 811589153, i) for i, x in enumerate(data)]
     moves = [x[0] for x in data]
-    print(moves)
 
-    for i in range(10):
-        for j, move in enumerate(moves):
-            if i == 0:
-                find_by = -1
-            else:
-                find_by = j
-            idx = data.index((move, find_by))
+    for _ in range(10):
+        for i, move in enumerate(moves):
+            idx = data.index((move, i))
             data = data[idx + 1:] + data[:idx]
             idx2 = move % (L - 1)
-            data.insert(idx2, (move, j))
+            data.insert(idx2, (move, i))
 
     zero = data.index((0, zero_find_by))
     return (
