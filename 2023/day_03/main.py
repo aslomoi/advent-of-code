@@ -14,6 +14,10 @@ def parse_input(path: Path) -> list:
         return lines
 
 
+def has_symbol(substring: str) -> bool:
+    return bool(re.findall(r"[^0-9.]", substring))
+
+
 def part_1(data: list):
     total = 0
     end = 0
@@ -23,28 +27,17 @@ def part_1(data: list):
             start = match_.start()
             end = match_.end()
             num = int(match_.group())
-            if r > 1 and (
-                len(
-                    re.findall(
-                        r"[^0-9.]",
-                        data[r - 1][max(start - 1, 0) : min(end + 1, len(row))],
-                    )
-                )
-                > 0
+            if r > 1 and has_symbol(
+                data[r - 1][max(start - 1, 0) : min(end + 1, len(row))],
             ):
                 total += num
-            elif r < len(data) and (
-                len(
-                    re.findall(
-                        r"[^0-9.]",
-                        data[r + 1][max(start - 1, 0) : min(end + 1, len(row))],
-                    )
-                )
+            elif r < len(data) and has_symbol(
+                data[r + 1][max(start - 1, 0) : min(end + 1, len(row))]
             ):
                 total += num
-            elif start > 0 and len(re.findall(r"[^0-9.]", row[start - 1])):
+            elif start > 0 and has_symbol(row[start - 1]):
                 total += num
-            elif end < len(row) and len(re.findall(r"[^0-9.]", row[end])):
+            elif end < len(row) and has_symbol(row[end]):
                 total += num
 
     return total
@@ -59,33 +52,22 @@ def part_2(data: list):
             start = match_.start()
             end = match_.end()
             num = int(match_.group())
-            if r > 1 and (
-                len(
-                    re.findall(
-                        r"[^0-9.]",
-                        data[r - 1][max(start - 1, 0) : min(end + 1, len(row))],
-                    )
-                )
-                > 0
+            if r > 1 and has_symbol(
+                data[r - 1][max(start - 1, 0) : min(end + 1, len(row))]
             ):
                 for c in range(max(start - 1, 0), min(end + 1, len(row))):
                     if data[r - 1][c] == "*":
                         gears[(r - 1, c)].append(num)
-            elif r < len(data) and (
-                len(
-                    re.findall(
-                        r"[^0-9.]",
-                        data[r + 1][max(start - 1, 0) : min(end + 1, len(row))],
-                    )
-                )
+            elif r < len(data) and has_symbol(
+                data[r + 1][max(start - 1, 0) : min(end + 1, len(row))]
             ):
                 for c in range(max(start - 1, 0), min(end + 1, len(row))):
                     if data[r + 1][c] == "*":
                         gears[(r + 1, c)].append(num)
-            elif start > 0 and len(re.findall(r"[^0-9.]", row[start - 1])):
+            elif start > 0 and has_symbol(row[start - 1]):
                 if row[start - 1] == "*":
                     gears[(r, start - 1)].append(num)
-            elif end < len(row) and len(re.findall(r"[^0-9.]", row[end])):
+            elif end < len(row) and has_symbol(row[end]):
                 if row[end] == "*":
                     gears[(r, end)].append(num)
     return sum(v[0] * v[1] for v in gears.values() if len(v) == 2)
