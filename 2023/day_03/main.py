@@ -39,7 +39,6 @@ def part_1(data: list):
                 total += num
             elif end < len(row) and has_symbol(row[end]):
                 total += num
-
     return total
 
 
